@@ -1,3 +1,5 @@
 <?php
 
-echo 'veikiaa';
+echo 'veikia';
+
+echo 'labas rytas';
