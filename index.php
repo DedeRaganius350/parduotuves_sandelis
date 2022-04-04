@@ -2,4 +2,4 @@
 
 echo 'veikia';
 
-echo 'labas rytas';
+echo 'labas';
