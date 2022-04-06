@@ -1,4 +1,22 @@
-<form action="index.php?page=register" method="post">
+<?php
+$database = mysqli_connect('localhost', 'root', '', 'parduotuves_sandelis');
+
+$submit = $_GET['forma'] ?? null;
+
+if ($submit == 'create_employee') {
+    $vardas = $_POST['vardas'];
+    $pareigybes = $_POST['pareigybes'];
+    $pastas = $_POST['pastas'];
+    $slaptazodis = $_POST['slaptazodis'];
+    $sql = "insert into darbuotojai (vardas, pareigybe, pastas, slaptazodis) value ('$vardas','$pareigybes','$pastas','$slaptazodis')";
+    mysqli_query($database, $sql);
+    header('Location: produktu_sandelis.php');
+}
+
+?>
+
+
+<form action="registration.php?forma=create_employee" method="post">
     <h1>Registracijos Forma</h1>
     <fieldset>
         <legend>Registracija:</legend>
@@ -7,8 +25,8 @@
         <br>
         <label for="pareigybes">Pareigybes:</label>
         <select name="pareigybes" id="pareigybes">
-            <option value="sandelio darbuotojas">Sandelio darbuotojas</option>
-            <option value="parduotuves darbuotojas">Parduotuves darbuotojas</option>
+            <option value="sandelio_darbuotojas" name="sandelio_darbuotojas">Sandelio darbuotojas</option>
+            <option value="parduotuves_darbuotojas" name="parduotuves_ darbuotojas">Parduotuves darbuotojas</option>
         </select>
         <br>
         <label for="pastas">Pastas:</label>
