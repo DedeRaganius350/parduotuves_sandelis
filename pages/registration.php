@@ -8,9 +8,30 @@ if ($submit == 'create_employee') {
     $pareigybes = $_POST['pareigybes'];
     $pastas = $_POST['pastas'];
     $slaptazodis = $_POST['slaptazodis'];
-    $sql = "insert into darbuotojai (vardas, pareigybe, pastas, slaptazodis) value ('$vardas','$pareigybes','$pastas','$slaptazodis')";
-    mysqli_query($database, $sql);
-    header('Location: produktu_sandelis.php');
+
+    if (empty($vardas)) {
+        echo '<pre>';
+        echo 'Nera vardo';
+        echo '</pre>';
+    }
+
+    if (empty($pastas)) {
+        echo '<pre>';
+        echo 'Nera pasto';
+        echo '</pre>';
+    }
+
+    if (empty($slaptazodis)) {
+        echo '<pre>';
+        echo 'Nera slaptazodzio';
+        echo '</pre>';
+    } else {
+
+        $sql = "insert into darbuotojai (vardas, pareigybe, pastas, slaptazodis) value ('$vardas','$pareigybes','$pastas','$slaptazodis')";
+        mysqli_query($database, $sql);
+        header('Location: produktu_sandelis.php');
+
+    }
 }
 
 ?>
