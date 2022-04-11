@@ -27,6 +27,8 @@ if ($submit == 'login_employee') {
 
         $slaptazodis = validate($_POST['slaptazodis']);
 
+        $pareigybes = $_POST['pareigybes'];
+
         if (empty($pastas)) {
 
             echo 'Blogas pastas';
@@ -42,15 +44,15 @@ if ($submit == 'login_employee') {
 
         } else {
 
-            $sql = "SELECT * FROM darbuotojai WHERE pastas='$pastas' AND slaptazodis='$slaptazodis'";
-
+            $sql = "SELECT * FROM darbuotojai WHERE pastas='$pastas' AND slaptazodis='$slaptazodis' AND pareigybe='$pareigybes'";
+//            var_dump($sql);
             $result = mysqli_query($database, $sql);
-
+//            print_r($result);
             if (mysqli_num_rows($result) === 1) {
 
                 $row = mysqli_fetch_assoc($result);
-
-                if ($row['pastas'] === $pastas && $row['slaptazodis'] === $slaptazodis) {
+//var_dump($row);
+                if ($row['pastas'] === $pastas && $row['slaptazodis'] === $slaptazodis && $row['pareigybe'] === 'sandelio_darbuotojas') {
 
                     echo "Logged in!";
 
@@ -58,31 +60,24 @@ if ($submit == 'login_employee') {
 
                     header("Location: produktu_sandelis.php");
 
-                    exit();
 
-                } else {
+                } else if ($row['pastas'] === $pastas && $row['slaptazodis'] === $slaptazodis && $row['pareigybe'] === 'parduotuves_darbuotojas') {
 
-                    echo 'Netinka pastas arba slaptazodis';
+                    echo "Logged in!";
 
-                    exit();
+                    $_SESSION['pastas'] = $row['pastas'];
+
+                    header("Location: parduotuves_valdymas.php");
 
                 }
 
             } else {
 
-                echo 'Netinka pastas arba slaptazodis';
-
-                exit();
+                echo 'Netinka pastas arba slaptazodis arba pasirinktas statusas';
 
             }
 
         }
-
-    } else {
-
-        header("Location: index.php");
-
-        exit();
 
     }
 }
@@ -98,6 +93,12 @@ if ($submit == 'login_employee') {
     <input type="text" id="pastas" name="pastas"><br><br>
     <label for="slaptazodis">Slaptazodis:</label>
     <input type="text" id="slaptazodis" name="slaptazodis"><br><br>
+    <label for="pareigybes">Pasirinkite statusa:</label>
+    <select name="pareigybes" id="pareigybes">
+        <option value="sandelio_darbuotojas" name="sandelio_darbuotojas">Sandelio darbuotojas</option>
+        <option value="parduotuves_darbuotojas" name="parduotuves_ darbuotojas">Parduotuves darbuotojas</option>
+        <option value="pirkejas" name="pirkejas">Pirkejas</option>
+    </select><br><br>
     <input type="submit" value="Prisijungti">
     <hr>
 
